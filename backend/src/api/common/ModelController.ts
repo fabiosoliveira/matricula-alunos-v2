@@ -67,9 +67,7 @@ abstract class ModelController<T extends mongoose.Document> {
     this._model.find(conditions, select, options)
       .then(async (data): Promise<void> => {
         const result = await this._model.countDocuments(conditions)
-        if (result) {
-          return this.envelopData(data, result)
-        } else throw new Error('Erro ao contar documentos')
+        return this.envelopData(data, result)
       })
       .then((data): void => {
         res.send(data)
