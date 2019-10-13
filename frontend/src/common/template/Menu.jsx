@@ -9,6 +9,7 @@ export default () => (
         <MenuTree label='Cadastro' icon='edit'>
             <MenuItem path='endereco' label='Endereco' icon='envelope' />
             <MenuItem path='aluno' label='Aluno' icon='graduation-cap' />
+            <MenuItem path='turma' label='Turma' icon='users' />
         </MenuTree>
     </ul>
 )

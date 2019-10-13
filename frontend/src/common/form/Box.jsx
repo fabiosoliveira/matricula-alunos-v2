@@ -1,6 +1,20 @@
 import React, {useState} from 'react'
 
-export default ({ title, children, visivel = false }) => {
+export const Box = ({ title, children }) => {
+
+  return (
+    <div className='box'>
+        <div className="box-header">
+          <h3 className="box-title">{title}</h3>
+        </div>
+        <div className="box-body">
+            {children}
+        </div>
+    </div>
+  )
+}
+
+export const BoxWithToolsAndBorder = ({ title, children, visivel = false }) => {
 
   const [collapsed, setCollapse] = useState(visivel)
 
@@ -16,9 +30,11 @@ export default ({ title, children, visivel = false }) => {
           </div>
 
         </div>
-        <div className="box-body" style={!collapsed ? {display: "none"} : {display: "block"}}>
+        <div className="box-body collapse" style={!collapsed ? {display: "none"} : {display: "block"}}>
             {children}
         </div>
     </div>
   )
 }
+
+export default Box

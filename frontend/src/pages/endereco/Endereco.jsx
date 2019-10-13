@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { selectTab, showTabs } from '../../common/tab/tabActions'
 import { create, update, remove } from './enderecoActions'
+import { TAB_LIST, TAB_CREATE } from "../consts";
 
 import List from './EnderecoList'
 import Form from './EnderecoForm'
@@ -11,8 +12,8 @@ import RenderPage from '../RenderPage';
 
 class Endereco extends Component {
     componentWillMount() {
-        this.props.selectTab('tabList')
-        this.props.showTabs('tabList', 'tabCreate')
+        this.props.selectTab(TAB_LIST)
+        this.props.showTabs(TAB_LIST, TAB_CREATE)
     }
 
     render() {

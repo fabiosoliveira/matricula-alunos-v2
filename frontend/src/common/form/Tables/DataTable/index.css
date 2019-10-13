@@ -1,0 +1,13 @@
+.flex-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.table-options {
+    margin: 15px 0px;
+}
+
+div.table-pagination > span {
+    align-self: center;
+}

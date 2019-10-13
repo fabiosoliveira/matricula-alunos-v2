@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { selectTab, showTabs } from '../../common/tab/tabActions'
 import { create, update, remove } from './alunoActions'
+import { TAB_LIST, TAB_CREATE } from "../consts";
 
 import List from './AlunoList'
 import Form from './AlunoForm'
@@ -12,8 +13,8 @@ import RenderPage from '../RenderPage';
 class Aluno extends Component {
 
     componentWillMount() {
-        this.props.selectTab('tabList')
-        this.props.showTabs('tabList', 'tabCreate')
+        this.props.selectTab(TAB_LIST)
+        this.props.showTabs(TAB_LIST, TAB_CREATE)
     }
 
     render() {
@@ -23,7 +24,7 @@ class Aluno extends Component {
             List, Form, 
             create: this.props.create, 
             update: this.props.update, 
-            remove: this.props.remove 
+            remove: this.props.remove
         }
 
         return <RenderPage {...params} />

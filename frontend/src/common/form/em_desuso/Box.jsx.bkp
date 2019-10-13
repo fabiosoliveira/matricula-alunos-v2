@@ -1,0 +1,46 @@
+import React, {useState, useLayoutEffect, useRef} from 'react'
+
+import {Spring, config } from 'react-spring/renderprops'
+//import useMeasure from './useMeasure'
+
+
+export default ({ title, children, visivel = false }) => {
+
+  const [collapsed, setCollapse] = useState(visivel)
+  //const [bind, { height }] = useMeasure()
+
+  const [height, setHeight] = useState(0)
+  const inputEl = useRef(null)
+  //const [altura, setAltura] = useState(0)
+
+  useLayoutEffect(()=>{
+    //const val = document.getElement(inputEl.current).offsetHeight
+    //console.log(inputEl.current.clientHeight)
+    setHeight(inputEl.current.clientHeight)
+  })
+  
+  console.log(height)
+  return (
+    <div className={`box box-default ${!collapsed ? 'collapsed-box' : ''}`}>
+        <div className="box-header with-border" onClick={() => setCollapse(!collapsed)}>
+          <h3 className="box-title">{title}</h3>
+
+          <div className="box-tools pull-right">
+            <button type="button" className="btn btn-box-tool" onClick={() => setCollapse(!collapsed)}>
+              <i className={`fa fa-${collapsed ? 'minus' : 'plus'}`}></i>
+            </button>
+          </div>
+
+        </div>
+        {/* <div className="box-body collapse" style={!collapsed ? {display: "none"} : {display: "block"}}> */}
+        <Spring
+          config={{duration: 5000}}
+          from={{ height: 0 }}
+          to={{ height: height }}>
+            {props => <div ref={inputEl} class="box-body" style={props}>{children}</div>}
+        </Spring>
+        {/* </div> */}
+    </div>
+  )
+}
+

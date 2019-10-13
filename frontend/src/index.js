@@ -7,7 +7,6 @@ import promise from 'redux-promise'
 import multi from 'redux-multi'
 import thunk from 'redux-thunk'
 
-import * as serviceWorker from './serviceWorker';
 import App from './main/App';
 import reducers from './main/reducers'
 
@@ -20,5 +19,3 @@ ReactDOM.render(
         <App />
     </Provider>
 , document.getElementById('app'));
-
-serviceWorker.unregister();

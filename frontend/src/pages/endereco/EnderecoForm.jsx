@@ -4,9 +4,19 @@ import { bindActionCreators } from 'redux'
 import { reduxForm, Field } from 'redux-form'
 
 import { init } from './enderecoActions'
-import LabelAndInput from '../../common/form/LabelAndInput'
+import { Input } from '../../common/form/Input'
+import Button from '../../common/form/Button'
+import { ENDERECO_FORM } from "../consts";
+import { cepMask } from "../../common/utils/masksFild";
 
 class EnderecoForm extends Component {
+
+    componentWillUnmount(){
+        const { selected } = this.props.tab
+        if(selected === 'tabUpdate' || selected === 'tabDelete'){
+            this.props.init()
+        }
+    }
 
     render() {
         const { handleSubmit, readOnly } = this.props
@@ -14,78 +24,29 @@ class EnderecoForm extends Component {
             // eslint-disable-next-line
             <form role='form' onSubmit={handleSubmit}>
                 <div className='box-body'>
-                    <Field name='rua' component={LabelAndInput} readOnly={readOnly}
+                    <Field name='rua' component={Input} readOnly={readOnly}
                         label='Rua' cols='12 3' placeholder='Informe a rua' />
-                    <Field name='bairro' component={LabelAndInput} readOnly={readOnly}
+                    <Field name='bairro' component={Input} readOnly={readOnly}
                         label='Bairro' cols='12 3' placeholder='Informe o bairro' />
-                    <Field name='cep' component={LabelAndInput} readOnly={readOnly}
-                        label='CEP' cols='12 3' placeholder='Informe o cep' mask='99.999-999' />
-                    <Field name='cidade' component={LabelAndInput} readOnly={readOnly}
+                    <Field name='cep' component={Input} readOnly={readOnly}
+                        label='CEP' cols='12 3' {...cepMask} />
+                    <Field name='cidade' component={Input} readOnly={readOnly}
                         label='Cidade' cols='12 3' placeholder='Informe a cidade' />
                 </div>
                 <div className='box-footer'>
-                    <button type='submit' className={`btn btn-${this.props.submitClass}`}>
+                    <Button type='submit' option={this.props.submitClass}>
                         {this.props.submitLabel}
-                    </button>
-                    <button type='button' className='btn btn-default' onClick={this.props.init}>
+                    </Button>
+                    <Button onClick={this.props.init}>
                         Cancelar
-                    </button>
+                    </Button>
                 </div>
             </form>
         )
     }
 }
 
-
-EnderecoForm = reduxForm({ form: 'enderecoForm', destroyOnUnmount: false })(EnderecoForm)
+EnderecoForm = reduxForm({ form: ENDERECO_FORM, destroyOnUnmount: false })(EnderecoForm)
+const mapStateToProps = state => ({ tab: state.tab })
 const mapDispatchToProps = dispatch => bindActionCreators({ init }, dispatch)
-export default connect(null, mapDispatchToProps)(EnderecoForm)
-
-
-
-
-
-
-
-
-
-// import React from 'react'
-// import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
-// import { reduxForm, Field } from 'redux-form'
-
-// import { init } from './enderecoActions'
-// import LabelAndInput from '../common/form/LabelAndInput'
-
-// let EnderecoForm = (props) => {
-
-//     const { handleSubmit, readOnly } = props
-//     return (
-//         // eslint-disable-next-line
-//         <form role='form' onSubmit={handleSubmit}>
-//             <div className='box-body'>
-//                 <Field name='rua' component={LabelAndInput} readOnly={readOnly}
-//                     label='Rua' cols='12 3' placeholder='Informe a rua' />
-//                 <Field name='bairro' component={LabelAndInput} readOnly={readOnly}
-//                     label='Bairro' cols='12 3' placeholder='Informe o bairro' />
-//                 <Field name='cep' component={LabelAndInput} readOnly={readOnly}
-//                     label='CEP' cols='12 3' placeholder='Informe o cep' />
-//                 <Field name='cidade' component={LabelAndInput} readOnly={readOnly}
-//                     label='Cidade' cols='12 3' placeholder='Informe a cidade' />
-//             </div>
-//             <div className='box-footer'>
-//                 <button type='submit' className={`btn btn-${props.submitClass}`}>
-//                     {props.submitLabel}
-//                 </button>
-//                 <button type='button' className='btn btn-default' onClick={props.init}>
-//                     Cancelar
-//                 </button>
-//             </div>
-//         </form>
-//     )
-// }
-
-
-// EnderecoForm = reduxForm({ form: 'enderecoForm', destroyOnUnmount: false })(EnderecoForm)
-// const mapDispatchToProps = dispatch => bindActionCreators({ init }, dispatch)
-// export default connect(null, mapDispatchToProps)(EnderecoForm)
+export default connect(mapStateToProps, mapDispatchToProps)(EnderecoForm)

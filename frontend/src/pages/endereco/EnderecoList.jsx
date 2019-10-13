@@ -1,59 +1,61 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getList, showUpdate, showDelete } from './enderecoActions'
+import { ButtonWarning, ButtonDanger } from "../../common/form/Button";
+import DataTable from '../../common/form/Tables/DataTable';
 
-class EnderecoList extends Component {
+const EnderecoList = ({getList, data, showUpdate, showDelete}) => {
 
-    componentWillMount() {
-        this.props.getList()
+    const [limit, setLimit] = useState(10)
+    const [page, setPage] = useState(1)
+    const [search, setSearch] = useState('')
+    const [sort, setSort] = useState('rua')
+    
+    useEffect(()=>{
+        getList(limit, page, search, sort)
+    },[getList, limit, search, page, sort])
+
+    const head = {
+        rua: {label: 'Rua'},
+        bairro: {label: 'Bairro'}, 
+        cep: {label: 'Cep'},
+        cidade: {label: 'Cidade'},
+        actions: {label: 'Ações', class: 'table-actions'}
     }
 
-    renderRows() {
-        const list = this.props.list || []
-        return list.map(endereco => (
-            <tr key={endereco._id}>
-                <td>{endereco.rua}</td>
-                <td>{endereco.bairro}</td>
-                <td>{endereco.cep}</td>
-                <td>{endereco.cidade}</td>
-                <td>
-                    <button className='btn btn-warning' onClick={() =>
-                        this.props.showUpdate(endereco)}>
-                        <i className='fa fa-pencil'></i>
-                    </button>
-                    <button className='btn btn-danger' onClick={() =>
-                        this.props.showDelete(endereco)}>
-                        <i className='fa fa-trash-o'></i>
-                    </button>
-                </td>
-            </tr>
-        ))
-    }
+    const {meta, items} = data
 
-    render() {
-        return (
-            <div>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>Rua</th>
-                            <th>Bairro</th>
-                            <th>Cep</th>
-                            <th>Cidade</th>
-                            <th className='table-actions'>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderRows()}
-                    </tbody>
-                </table>
-            </div>
-        )
-    }
+    const enderecos = items.map(endereco => {
+        const {_id, rua, bairro, cep, cidade} = endereco
+
+        return {
+            key: _id,
+            rua,
+            bairro,
+            cep,
+            cidade,
+            actions: <>
+                <ButtonWarning onClick={() => showUpdate(endereco)} />
+                <ButtonDanger onClick={() => showDelete(endereco)} />
+            </>
+        }
+    })
+
+    return <DataTable
+                data={enderecos} 
+                head={head} 
+                limit={limit}
+                setLimit={setLimit} 
+                page={page}
+                setPage={setPage}
+                setSearch={setSearch}
+                setSort={setSort}
+                count={meta.count}
+            />
 }
 
-const mapStateToProps = state => ({ list: state.endereco.list })
+const mapStateToProps = state => ({ data: state.endereco.data })
 const mapDispatchToProps = dispatch => bindActionCreators({
     getList, showUpdate, showDelete
 }, dispatch)
@@ -61,25 +63,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(EnderecoList)
 
 
 
-
-
-
-
-
-
-// import React, { useEffect } from 'react'
+// import React, { Component } from 'react'
 // import { bindActionCreators } from 'redux'
 // import { connect } from 'react-redux'
 // import { getList, showUpdate, showDelete } from './enderecoActions'
+// import { ButtonWarning, ButtonDanger } from "../../common/form/Button";
 
-// const EnderecoList = (props) => {
+// class EnderecoList extends Component {
 
-//     useEffect(() => {
-//         props.getList()
-//     })
+//     componentWillMount() {
+//         this.props.getList()
+//     }
 
-//     function renderRows() {
-//         const list = props.list || []
+//     renderRows() {
+//         const list = this.props.list || []
 //         return list.map(endereco => (
 //             <tr key={endereco._id}>
 //                 <td>{endereco.rua}</td>
@@ -87,37 +84,33 @@ export default connect(mapStateToProps, mapDispatchToProps)(EnderecoList)
 //                 <td>{endereco.cep}</td>
 //                 <td>{endereco.cidade}</td>
 //                 <td>
-//                     <button className='btn btn-warning' onClick={() =>
-//                         props.showUpdate(endereco)}>
-//                         <i className='fa fa-pencil'></i>
-//                     </button>
-//                     <button className='btn btn-danger' onClick={() =>
-//                         props.showDelete(endereco)}>
-//                         <i className='fa fa-trash-o'></i>
-//                     </button>
+//                     <ButtonWarning onClick={() => this.props.showUpdate(endereco)} />
+//                     <ButtonDanger onClick={() => this.props.showDelete(endereco)} />
 //                 </td>
 //             </tr>
 //         ))
 //     }
 
-//     return (
-//         <div>
-//             <table className='table'>
-//                 <thead>
-//                     <tr>
-//                         <th>Rua</th>
-//                         <th>Bairro</th>
-//                         <th>Cep</th>
-//                         <th>Cidade</th>
-//                         <th className='table-actions'>Ações</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     {renderRows()}
-//                 </tbody>
-//             </table>
-//         </div>
-//     )
+//     render() {
+//         return (
+//             <div>
+//                 <table className='table table-condensed'>
+//                     <thead>
+//                         <tr>
+//                             <th>Rua</th>
+//                             <th>Bairro</th>
+//                             <th>Cep</th>
+//                             <th>Cidade</th>
+//                             <th className='table-actions'>Ações</th>
+//                         </tr>
+//                     </thead>
+//                     <tbody>
+//                         {this.renderRows()}
+//                     </tbody>
+//                 </table>
+//             </div>
+//         )
+//     }
 // }
 
 // const mapStateToProps = state => ({ list: state.endereco.list })

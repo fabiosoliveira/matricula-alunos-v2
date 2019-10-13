@@ -1,10 +1,13 @@
 import axios from 'axios'
-import commonAction, {BASE_URL} from '../commonActions'
+import commonAction from '../commonActions'
+import { ENDERECOS_FETCHED, ENDERECO_FORM, BASE_URL } from "../consts";
 
-export function getList() {
-    const request = axios.get(`${BASE_URL}/enderecos`)
+export function getList(limit=10, page=1, search='', sort='') {
+    let url = `${BASE_URL}/enderecos?limit=${limit}&page=${page}&sort=${sort}&rua__regex=/${search}/i`
+
+    const request = axios.get(url)
     return {
-        type: 'ENDERECOS_FETCHED',
+        type: ENDERECOS_FETCHED,
         payload: request
     }
 }
@@ -22,16 +25,16 @@ export function remove(values) {
 }
 
 export function showUpdate(endereco) {
-    return commonAction.showUpdate(endereco, 'enderecoForm')
+    return commonAction.showUpdate(endereco, ENDERECO_FORM)
 }
 
 export function showDelete(endereco) {
-    return commonAction.showDelete(endereco, 'enderecoForm')
+    return commonAction.showDelete(endereco, ENDERECO_FORM)
 }
 
 export function init() {
     return [
-        ...commonAction.init('enderecoForm'), 
+        ...commonAction.init(ENDERECO_FORM), 
         getList()
     ]
 }
