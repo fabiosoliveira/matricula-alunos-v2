@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useState, useMemo} from 'react'
 import _ from 'lodash'
+import If from '../../../operator/If'
 import './index.css'
 
 const getInitialValues = (data) => {
@@ -111,6 +112,9 @@ const DataTable = ({ data, head = {}, limit, setLimit, page, setPage, setSearch,
                         {keys.map(renderHeader)}
                     </tr>
                 </thead>
+                <If test={data.length === 0}>
+                    <p className='centralizado'>Nenhum registro correspondente encontrado</p>
+                </If>
                 <tbody>
                     {data.map(renderRow)}
                 </tbody>
