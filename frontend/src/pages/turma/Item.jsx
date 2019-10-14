@@ -18,7 +18,7 @@ const loadOptionsAlunos = {
         },
         processResults: function (data) {
             return {
-                results: data.map(aluno => (
+                results: data.items.map(aluno => (
                     { 
                         id: aluno._id, 
                         text: aluno.nome, 

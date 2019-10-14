@@ -19,7 +19,7 @@ const loadOptionsEndereco = {
         },
         processResults: function (data) {
             return {
-                results: data.map(endereco => (
+                results: data.items.map(endereco => (
                     {
                         id: endereco._id,
                         text: endereco.endereco
