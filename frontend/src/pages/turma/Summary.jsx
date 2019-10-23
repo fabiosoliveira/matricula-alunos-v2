@@ -2,7 +2,7 @@ import React from 'react'
 
 import Grid from '../../common/layout/Grid'
 import Row from '../../common/layout/Row'
-import ValueBox from '../../common/widget/ValueBox'
+import SmallBox from '../../common/widget/SmallBox'
 
 // ['CURSANDO', 'APROVADO', 'REPROVADO', 'DESISTENTE']
 
@@ -11,15 +11,15 @@ export default ({ cursando, aprovado, reprovado, desistente }) => (
         <fieldset>
             <legend>Resumo</legend>
             <Row>
-                <ValueBox cols='12 2' color='green' icon='bank'
+                <SmallBox cols='12 2' color='blue' icon='user'
                     value={cursando} text='Cursandos' />
-                <ValueBox cols='12 2' color='red' icon='credit-card'
+                <SmallBox cols='12 2' color='green' icon='user'
                     value={aprovado} text='Aprovados' />
-                <ValueBox cols='12 2' color='green' icon='bank'
+                <SmallBox cols='12 2' color='red' icon='user'
                     value={reprovado} text='Reprovados' />
-                <ValueBox cols='12 2' color='red' icon='credit-card'
+                <SmallBox cols='12 2' color='yellow' icon='user'
                     value={desistente} text='Desistentes' />
-                <ValueBox cols='12 2' color='blue' icon='money'
+                <SmallBox cols='12 2' color='gray' icon='users'
                     value={cursando + aprovado + reprovado + desistente} 
                     text='Total Alunos' />
             </Row>
