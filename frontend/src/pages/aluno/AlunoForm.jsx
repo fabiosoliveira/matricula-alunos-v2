@@ -45,54 +45,64 @@ class AlunoForm extends Component {
             // eslint-disable-next-line
             <form role='form' onSubmit={handleSubmit}>
                 <BoxWithToolsAndBorder title='Dados pessoais' visivel={true}>
-                    <Field name='nome' component={Input} readOnly={readOnly}
-                        label='Nome' cols='12 3' placeholder='Informe o nome' />
-                    <Field name='dataNascimento' component={Input} readOnly={readOnly}
-                        label='Data de Nascimento' cols='12 3' type='date' icon='calendar'
-                        format={dateFormatter} />
-                    <Field name='cor' component={Select} readOnly={readOnly}
-                        label='Cor' cols='12 3'>
-                        <option></option>
-                        <option value="BRANCO">Branco</option>
-                        <option value="NEGRO">Negro</option>
-                        <option value="PARDO">Pardo</option>
-                    </Field>
-                    <Field name='genero' component={Select} readOnly={readOnly}
-                        label='Genero' cols='12 3'>
-                        <option></option>
-                        <option value="MASCULINO">Masculino</option>
-                        <option value="FEMININO">Feminino</option>
-                    </Field>
-                    <Field name='telefone' component={Input} readOnly={readOnly}
-                        label='Telefone' cols='12 3' type='tel' icon='phone' {...phoneMask} />
-                    <Field name='numeroSus' component={Input} readOnly={readOnly}
-                        label='SUS' cols='12 3' placeholder='Informe o número do SUS' {...susMask} />
-                    <Field name='cpf' component={Input} readOnly={readOnly}
-                        label='CPF' cols='12 3' {...cpfMask} />
-                    <Fields names={['endereco.id', 'endereco.endereco']} component={SelectBusca} readOnly={readOnly}
-                        label='Endereço' cols='12 6' icon='search' loadOptions={loadOptionsEndereco} />
-                    <Field name='status' component={Select} readOnly={readOnly}
-                        label='Status' cols='12 3'>
-                        <option></option>
-                        <option value="ATIVO">Ativo</option>
-                        <option value="INATIVO">Inativo</option>
-                        <option value="MATRICULADO">Matriculado</option>
-                    </Field>
+                    <div className="row">
+                        <Field name='nome' component={Input} readOnly={readOnly}
+                            label='Nome' cols='12 3' placeholder='Informe o nome' />
+                        <Field name='dataNascimento' component={Input} readOnly={readOnly}
+                            label='Data de Nascimento' cols='12 3' type='date' icon='calendar'
+                            format={dateFormatter} />
+                        <Field name='cor' component={Select} readOnly={readOnly}
+                            label='Cor' cols='12 3'>
+                            <option></option>
+                            <option value="BRANCO">Branco</option>
+                            <option value="NEGRO">Negro</option>
+                            <option value="PARDO">Pardo</option>
+                        </Field>
+                        <Field name='genero' component={Select} readOnly={readOnly}
+                            label='Genero' cols='12 3'>
+                            <option></option>
+                            <option value="MASCULINO">Masculino</option>
+                            <option value="FEMININO">Feminino</option>
+                        </Field>
+                    </div>
+                    <div className="row">
+                        <Field name='telefone' component={Input} readOnly={readOnly}
+                            label='Telefone' cols='12 3' type='tel' icon='phone' {...phoneMask} />
+                        <Field name='numeroSus' component={Input} readOnly={readOnly}
+                            label='SUS' cols='12 3' placeholder='Informe o número do SUS' {...susMask} />
+                        <Field name='cpf' component={Input} readOnly={readOnly}
+                            label='CPF' cols='12 3' {...cpfMask} />
+                    </div>
+                    <div className="row">
+                        <Fields names={['endereco.id', 'endereco.endereco']} component={SelectBusca} readOnly={readOnly}
+                            label='Endereço' cols='12 6' icon='search' loadOptions={loadOptionsEndereco} />
+                        <Field name='status' component={Select} readOnly={readOnly}
+                            label='Status' cols='12 3'>
+                            <option></option>
+                            <option value="ATIVO">Ativo</option>
+                            <option value="INATIVO">Inativo</option>
+                            <option value="MATRICULADO">Matriculado</option>
+                        </Field>
+                    </div>
                 </BoxWithToolsAndBorder>
 
                 {/* Documento RG */}
                 <BoxWithToolsAndBorder title='Documentos' visivel={false}>
-                    <Field name='rg.numeroRegistro' component={Input} readOnly={readOnly}
-                        label='RG' cols='12 3' placeholder='Informe o número do RG' />
-                    <Field name='rg.dataEspedicao' component={Input} readOnly={readOnly}
-                        label='Data Expedição' cols='12 3' type='date' icon='calendar'
-                        format={dateFormatter} />
-                    <Field name='rg.emissor' component={Input} readOnly={readOnly}
-                        label='Emissor' cols='12 3' placeholder='Informe o Emissor do RG' />
-                    <Field name='rg.nomePai' component={Input} readOnly={readOnly}
-                        label='Nome do pai' cols='12 6' placeholder='Informe o nome do pai' />
-                    <Field name='rg.nomeMae' component={Input} readOnly={readOnly}
-                        label='Nome da Mãe' cols='12 6' placeholder='Informe o nome da Mãe' />
+                    <div className="row">
+                        <Field name='rg.numeroRegistro' component={Input} readOnly={readOnly}
+                            label='RG' cols='12 3' placeholder='Informe o número do RG' />
+                        <Field name='rg.dataEspedicao' component={Input} readOnly={readOnly}
+                            label='Data Expedição' cols='12 3' type='date' icon='calendar'
+                            format={dateFormatter} />
+                        <Field name='rg.emissor' component={Input} readOnly={readOnly}
+                            label='Emissor' cols='12 3' placeholder='Informe o Emissor do RG' />
+                    </div>
+                    <div className="row">
+                        <Field name='rg.nomePai' component={Input} readOnly={readOnly}
+                            label='Nome do pai' cols='12 6' placeholder='Informe o nome do pai' />
+                        <Field name='rg.nomeMae' component={Input} readOnly={readOnly}
+                            label='Nome da Mãe' cols='12 6' placeholder='Informe o nome da Mãe' />
+                    </div>
                 </BoxWithToolsAndBorder>
 
                 {/* Responsável */}
