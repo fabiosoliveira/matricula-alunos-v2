@@ -2,30 +2,39 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Field, Fields, arrayInsert, arrayRemove } from 'redux-form'
+import _ from 'lodash'
 
 import Input, { dateFormatter } from '../../common/form/Input'
 import Select, { SelectBusca } from '../../common/form/Select';
 import { ButtonSucces, ButtonWarning, ButtonDanger } from "../../common/form/Button";
 import { TURMA_FORM, BASE_URL } from "../consts";
 
-const loadOptionsAlunos = {
-    ajax: {
-        delay: 1000,
-        url: function (params) {
-            let url = `${BASE_URL}/alunos?nome__regex=/${params.term}/i`
-                url += '&select=nome%20dataNascimento&status__equals=ATIVO'
-            return url
-        },
-        processResults: function (data) {
-            return {
-                results: data.items.map(aluno => (
-                    { 
-                        id: aluno._id, 
-                        text: aluno.nome, 
-                        dataNascimento: aluno.dataNascimento
-                    }
-                ))
-            };
+function isEqualCustomizer(objValue, othValue) {
+    return objValue.nome === othValue.nome
+}
+
+function loadOptionsAlunos(list) {
+    return {
+        ajax: {
+            delay: 1000,
+            url: function (params) {
+                let url = `${BASE_URL}/alunos?nome__regex=/${params.term}/i`
+                    url += '&select=nome%20dataNascimento&status__equals=ATIVO'
+                return url
+            },
+            processResults: function (data) {
+                const result = _.differenceWith(data.items, list, isEqualCustomizer)
+
+                return {
+                    results: result.map(aluno => (
+                        { 
+                            id: aluno._id, 
+                            text: aluno.nome, 
+                            dataNascimento: aluno.dataNascimento
+                        }
+                    ))
+                };
+            }
         }
     }
 }
@@ -87,7 +96,7 @@ const Item = ({ index, item, list, field, readOnly, arrayInsert, arrayRemove }) 
 
                 <Fields names={[`${field}[${index}].aluno`, `${field}[${index}].nome`]}
                     component={SelectBusca} readOnly={readOnly} selected={setSelected}
-                    loadOptions={loadOptionsAlunos} />
+                    loadOptions={loadOptionsAlunos(list)} />
             </td>
             <td>
                 <Field name={`${field}[${index}].dataNascimento`} component={Input}
