@@ -57,9 +57,9 @@ const Item = ({ index, item, list, field, readOnly, arrayInsert, arrayRemove }) 
     function renderButtons() {
         return (
             <>
-                <ButtonSucces onClick={() => add(index + 1)} />
-                <ButtonWarning onClick={() => setIsEditing(!isEditing)} isEditing={isEditing} />
-                <ButtonDanger onClick={() => remove(index)} />
+                <ButtonSucces disabled={readOnly} onClick={() => add(index + 1)} />
+                <ButtonWarning disabled={readOnly} onClick={() => setIsEditing(!isEditing)} isEditing={isEditing} />
+                <ButtonDanger disabled={readOnly} onClick={() => remove(index)} />
             </>
         )
     }
