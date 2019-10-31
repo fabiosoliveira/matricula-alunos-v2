@@ -11,12 +11,10 @@ export function submit(values, method, source, init) {
         const id = values._id ? `/${values._id}` : ''
           axios[method](`${BASE_URL}/${source}${id}`, values)
             .then(resp => {
-                console.log(resp)
                 toastr.success('Sucesso', 'Operação Realizada com sucesso.')
                 dispatch(init())
             })
             .catch(e => {
-                console.log(e.response)
                 e.response.data.errors.forEach(error => toastr.error('Erro', error.message))
             })
     }
