@@ -2,9 +2,12 @@ import * as restify from 'restify'
 import mongoose from 'mongoose'
 import corsMiddleware, { CorsMiddleware } from 'restify-cors-middleware'
 
+import storage from '../config/storage'
+
 import handleError from '../api/common/errorHandler'
 import routes from './routes'
 import { ClientSession } from 'mongodb'
+import { fileURLToPath } from 'url'
 
 export class App {
   public server: restify.Server
@@ -26,9 +29,9 @@ export class App {
     const cors = this.corsConfiguration()
     this.server.pre(cors.preflight)
     this.server.use(cors.actual)
-    // this.server.use(restify.plugins.urlEncodedBodyParser())
+
     this.server.use(restify.plugins.queryParser())
-    this.server.use(restify.plugins.bodyParser())
+    this.server.use(restify.plugins.bodyParser(storage))
   }
 
   private corsConfiguration (): CorsMiddleware {
