@@ -2,15 +2,21 @@
 import { model, Document, Schema } from 'mongoose'
 
 export interface FotoInterface extends Document {
-    key: string,
-    // bairro: string,
-    // cep?: string,
-    // cidade: string,
-    // endereco: string,
-    // referencias: string[]
+  name: string,
+  size: number,
+  key: string,
+  url: string
 }
 
 const FotoSchema = new Schema({
+  name: String,
+  size: Number,
+  key: String,
+  url: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
   // rua: {
   //   type: String,
   //   minlength: [5, 'Tamanho mínimo da `{PATH}` é 5'],
@@ -44,9 +50,9 @@ const FotoSchema = new Schema({
   // },
   // referencias: [String]
 }
-// {
-//   timestamps: true
-// }
+  // {
+  //   timestamps: true
+  // }
 )
 
 export default model<FotoInterface>('Foto', FotoSchema)

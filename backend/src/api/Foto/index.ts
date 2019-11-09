@@ -1,3 +1,4 @@
+import { TurmaInterface } from './../Turma/Turma'
 import restify, { Request, Response, Next } from 'restify'
 
 import Foto, { FotoInterface } from './Foto'
@@ -8,9 +9,19 @@ class FotoController extends ModelController<FotoInterface> {
     super(Foto)
   }
 
-  private postFoto = (req: Request, res: Response, next: Next): void => {
-    res.json({ hello: 'Upload' })
-    next()
+  private postFoto = async (req: Request, res: Response, next: Next): Promise<void> => {
+    // console.log(req.files.file)
+    const { name, size, path } = req.files.file
+    // console.log(name, size, path.substring(12))
+    const foto = await Foto.create({
+      name,
+      size,
+      key: path.substring(12),
+      url: ''
+    })
+
+    res.json(foto)
+    return next()
   }
 
   public applyRoutes (application: restify.Server): void {
