@@ -7,7 +7,9 @@ import storage from '../config/storage'
 import handleError from '../api/common/errorHandler'
 import routes from './routes'
 import { ClientSession } from 'mongodb'
-import { fileURLToPath } from 'url'
+
+import dotenv from 'dotenv'
+dotenv.config()
 
 export class App {
   public server: restify.Server

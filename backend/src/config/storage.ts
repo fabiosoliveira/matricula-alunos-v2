@@ -1,6 +1,7 @@
-import path from 'path'
-import crypto from 'crypto'
-import fs from 'fs'
+import aws from 'aws-sdk'
+// import path from 'path'
+// import crypto from 'crypto'
+// import fs from 'fs'
 
 // const storage = {
 //   multipartFileHandler: function (part): void {
@@ -19,11 +20,18 @@ import fs from 'fs'
 //   }
 // }
 
-const storage = {
+const storageLocal = {
   keepExtensions: true,
   uploadDir: 'tmp/uploads',
+  mapParams: true,
+  mapFiles: true,
   // hash: 'sha1',
   maxFieldsSize: 2 * 1024 * 1024
 }
 
-export default storage
+export const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+})
+
+export default storageLocal

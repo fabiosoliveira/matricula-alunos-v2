@@ -1,6 +1,6 @@
-import { TurmaInterface } from './../Turma/Turma'
 import restify, { Request, Response, Next } from 'restify'
 
+import { s3 } from '../../config/storage'
 import Foto, { FotoInterface } from './Foto'
 import ModelController from '../common/ModelController'
 
@@ -9,18 +9,34 @@ class FotoController extends ModelController<FotoInterface> {
     super(Foto)
   }
 
-  private postFoto = async (req: Request, res: Response, next: Next): Promise<void> => {
-    // console.log(req.files.file)
-    const { name, size, path } = req.files.file
-    // console.log(name, size, path.substring(12))
-    const foto = await Foto.create({
-      name,
-      size,
-      key: path.substring(12),
-      url: ''
+  private postFoto = (req: Request, res: Response, next: Next): void => {
+    const { name, size, path, type } = req.files.file
+    const key = path.substring(12)
+
+    // const fileContent = fs.readFileSync(path)
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: key, // File name you want to save as in S3
+      ContentType: type,
+      ACL: 'public-read',
+      Body: req.params.file // fileContent
+    }
+
+    s3.upload(params, async (err, data): Promise<void> => {
+      if (err) {
+        throw err
+      }
+      const foto = await Foto.create({
+        name,
+        size,
+        key,
+        url: data.Location || ''
+      })
+
+      res.json(foto)
+      console.log(`File uploaded successfully. ${data.Location}`)
     })
 
-    res.json(foto)
     return next()
   }
 
