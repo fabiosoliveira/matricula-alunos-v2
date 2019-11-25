@@ -1,5 +1,11 @@
-// import { EnderecoInterface } from './Endereco'
 import { model, Document, Schema } from 'mongoose'
+import fs from 'fs'
+import path from 'path'
+import { promisify } from 'util'
+
+import aws from 'aws-sdk'
+import { PromiseResult } from 'aws-sdk/lib/request'
+const s3 = new aws.S3()
 
 export interface FotoInterface extends Document {
   name: string,
@@ -17,42 +23,23 @@ const FotoSchema = new Schema({
     type: Date,
     default: Date.now
   }
-  // rua: {
-  //   type: String,
-  //   minlength: [5, 'Tamanho mínimo da `{PATH}` é 5'],
-  //   required: [true, 'Campo `{PATH}` é obrigatório']
-  // },
-  // bairro: {
-  //   type: String,
-  //   minlength: [3, 'Tamanho mínimo do `{PATH}` é 3'],
-  //   maxlength: [10, 'Tamanho máximo do `{PATH}` é 10'],
-  //   required: [true, 'Campo `{PATH}` é obrigatório']
-  // },
-  // cep: {
-  //   type: String,
-  //   validate: {
-  //     validator: (v: string):boolean => /^[0-9]{2}.[0-9]{3}-[0-9]{3}$/.test(v),
-  //     msg: '`{VALUE}` não é um número válido'
-  //   },
-  //   required: false
-  // },
-  // cidade: {
-  //   type: String,
-  //   minlength: [3, 'Tamanho mínimo de `{PATH}` é 3'],
-  //   maxlength: [10, 'Tamanho máximo de `{PATH}` é 10'],
-  //   required: [true, 'Campo `{PATH}` é obrigatório']
-  // },
-  // endereco: {
-  //   type: String,
-  //   minlength: [5, 'Tamanho mínimo de `{PATH}` é 5'],
-  //   unique: true,
-  //   required: false
-  // },
-  // referencias: [String]
-}
-  // {
-  //   timestamps: true
-  // }
-)
+})
+
+FotoSchema.pre('save', function (): void {
+  if (!this.url) {
+    this.url = `${process.env.APP_URL}/api/files/${this.key}`
+  }
+})
+
+FotoSchema.pre('remove', function (): Promise<void> | Promise<PromiseResult<aws.S3.DeleteObjectOutput, aws.AWSError>> {
+  if (process.env.STORAGE_TYPE === 's3') {
+    return s3.deleteObject({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: this.key
+    }).promise()
+  } else {
+    return promisify(fs.unlink)(path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads', this.key))
+  }
+})
 
 export default model<FotoInterface>('Foto', FotoSchema)

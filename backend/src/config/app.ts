@@ -2,8 +2,6 @@ import * as restify from 'restify'
 import mongoose from 'mongoose'
 import corsMiddleware, { CorsMiddleware } from 'restify-cors-middleware'
 
-import storage from '../config/storage'
-
 import handleError from '../api/common/errorHandler'
 import routes from './routes'
 import { ClientSession } from 'mongodb'
@@ -33,7 +31,19 @@ export class App {
     this.server.use(cors.actual)
 
     this.server.use(restify.plugins.queryParser())
-    this.server.use(restify.plugins.bodyParser(storage))
+
+    this.server.use(restify.plugins.bodyParser({
+      keepExtensions: true,
+      uploadDir: 'tmp/uploads',
+      mapParams: true,
+      mapFiles: true,
+      maxFieldsSize: 2 * 1024 * 1024
+    }))
+
+    this.server.get('/api/files/*', restify.plugins.serveStatic({
+      appendRequestPath: false,
+      directory: './tmp/uploads'
+    }))
   }
 
   private corsConfiguration (): CorsMiddleware {
@@ -48,8 +58,7 @@ export class App {
   private database (): void {
     // const url = 'mongodb://localhost:27017/matricula'
     // const url = 'mongodb://localhost:27017,localhost:27018,localhost:27019/matricula'
-    const url = 'mongodb+srv://erca:erca123@fabioteste-7iby2.mongodb.net/matricula?retryWrites=true&w=majority'
-    mongoose.connect(url, {
+    mongoose.connect(process.env.MONGO_URL, {
       useCreateIndex: true,
       useNewUrlParser: true
       // replicaSet: 'rs',
