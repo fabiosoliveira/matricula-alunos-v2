@@ -5,11 +5,13 @@ import { reduxForm, Field, Fields } from 'redux-form'
 
 import { init } from './alunoActions'
 import Input, { dateFormatter } from '../../common/form/Input'
+import Profile from '../../common/form/Profile'
 import Button from '../../common/form/Button'
 import { Select, SelectBusca } from "../../common/form/Select";
 import { BoxWithToolsAndBorder } from '../../common/form/Box'
 import { ALUNO_FORM, BASE_URL } from "../consts";
 import { cpfMask, phoneMask, susMask } from "../../common/utils/masksFild";
+import Modal from '../../common/form/Modal'
 
 const loadOptionsEndereco = {
     ajax: {
@@ -32,20 +34,26 @@ const loadOptionsEndereco = {
 
 class AlunoForm extends Component {
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         const { selected } = this.props.tab
-        if(selected === 'tabUpdate' || selected === 'tabDelete'){
+        if (selected === 'tabUpdate' || selected === 'tabDelete') {
             this.props.init()
         }
     }
-    
+
     render() {
         const { handleSubmit, readOnly } = this.props
         return (
             // eslint-disable-next-line
             <form role='form' onSubmit={handleSubmit}>
+                <Modal />
                 <BoxWithToolsAndBorder title='Dados pessoais' visivel={true}>
                     <div className="row">
+                        {/* <a href="#sd" title='profile Fábio'>
+                            <img src={profile} alt="..." class="img-thumbnail img-circle center-block" />
+                        
+                        </a> */}
+
                         <Field name='nome' component={Input} readOnly={readOnly}
                             label='Nome' cols='12 3' placeholder='Informe o nome' />
                         <Field name='dataNascimento' component={Input} readOnly={readOnly}
@@ -72,10 +80,6 @@ class AlunoForm extends Component {
                             label='SUS' cols='12 3' placeholder='Informe o número do SUS' {...susMask} />
                         <Field name='cpf' component={Input} readOnly={readOnly}
                             label='CPF' cols='12 3' {...cpfMask} />
-                    </div>
-                    <div className="row">
-                        <Fields names={['endereco.id', 'endereco.endereco']} component={SelectBusca} readOnly={readOnly}
-                            label='Endereço' cols='12 6' icon='search' loadOptions={loadOptionsEndereco} />
                         <Field name='status' component={Select} readOnly={readOnly}
                             label='Status' cols='12 3'>
                             <option></option>
@@ -83,6 +87,12 @@ class AlunoForm extends Component {
                             <option value="INATIVO">Inativo</option>
                             <option value="MATRICULADO">Matriculado</option>
                         </Field>
+                    </div>
+                    <div className="row">
+                        <Fields names={['endereco.id', 'endereco.endereco']} component={SelectBusca} readOnly={readOnly}
+                            label='Endereço' cols='12 6' icon='search' loadOptions={loadOptionsEndereco} />
+                        <Field name='Profile' component={Profile} readOnly={readOnly}
+                            label='Profile' cols='12 6' />
                     </div>
                 </BoxWithToolsAndBorder>
 
