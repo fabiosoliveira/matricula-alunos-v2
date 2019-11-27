@@ -2,16 +2,18 @@ import React, {useState} from 'react'
 
 export const Modal = () => {
 
-    const [foto, setFoto] = useState()
+    const [foto, setFoto] = useState(null)
 
     function onChangeCustom(e) {
-        const upload = e.target.files[0]
-        const fileReader = new FileReader()
-        fileReader.onloadend = function() {
-            console.log(fileReader.result)
-            setFoto(fileReader.result)
-        }
-        fileReader.readAsDataURL(upload)
+        const upload = URL.createObjectURL(e.target.files[0])
+        setFoto(upload)
+        // const upload = e.target.files[0]
+        // const fileReader = new FileReader()
+        // fileReader.onloadend = function() {
+        //     console.log(fileReader.result)
+        //     setFoto(fileReader.result)
+        // }
+        // fileReader.readAsDataURL(upload)
     }
 
     return (
