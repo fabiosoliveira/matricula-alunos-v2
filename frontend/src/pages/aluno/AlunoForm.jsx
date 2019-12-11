@@ -5,7 +5,6 @@ import { reduxForm, Field, Fields } from 'redux-form'
 
 import { init } from './alunoActions'
 import Input, { dateFormatter } from '../../common/form/Input'
-import Profile from '../../common/form/Profile'
 import Button from '../../common/form/Button'
 import { Select, SelectBusca } from "../../common/form/Select";
 import { BoxWithToolsAndBorder } from '../../common/form/Box'
@@ -49,11 +48,6 @@ class AlunoForm extends Component {
                 <Modal />
                 <BoxWithToolsAndBorder title='Dados pessoais' visivel={true}>
                     <div className="row">
-                        {/* <a href="#sd" title='profile Fábio'>
-                            <img src={profile} alt="..." class="img-thumbnail img-circle center-block" />
-                        
-                        </a> */}
-
                         <Field name='nome' component={Input} readOnly={readOnly}
                             label='Nome' cols='12 3' placeholder='Informe o nome' />
                         <Field name='dataNascimento' component={Input} readOnly={readOnly}
@@ -91,8 +85,6 @@ class AlunoForm extends Component {
                     <div className="row">
                         <Fields names={['endereco.id', 'endereco.endereco']} component={SelectBusca} readOnly={readOnly}
                             label='Endereço' cols='12 6' icon='search' loadOptions={loadOptionsEndereco} />
-                        <Field name='Profile' component={Profile} readOnly={readOnly}
-                            label='Profile' cols='12 6' />
                     </div>
                 </BoxWithToolsAndBorder>
 

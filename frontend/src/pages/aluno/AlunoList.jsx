@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getList, showUpdate, showDelete } from './alunoActions'
-import { ButtonWarning, ButtonDanger } from "../../common/form/Button";
+import { ButtonWarning, ButtonDanger, ButtonInfo } from "../../common/form/Button";
 import DataTable from '../../common/form/Tables/DataTable'
 
 const AlunoList = ({getList, data, showUpdate, showDelete}) => {
@@ -40,6 +40,7 @@ const AlunoList = ({getList, data, showUpdate, showDelete}) => {
             actions: <>
                 <ButtonWarning onClick={() => showUpdate(aluno)} />
                 <ButtonDanger onClick={() => showDelete(aluno)} />
+                <ButtonInfo icon='camera' onClick={() => showDelete(aluno)} />
             </>
         }
     })
