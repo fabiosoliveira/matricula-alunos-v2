@@ -1,0 +1,127 @@
+import React, { useState, useEffect } from 'react'
+import Label from './Label'
+
+import './LabelAndSelectBuscaIcon.css'
+
+export default ({ selectValue, selectSize, cols, name, label, input, 
+                    placeholder, readOnly, icon, children, pesquisa }) => {
+
+    const [value, setValue] = useState(selectValue)
+    const [display, setDisplay] = useState('none')
+    const [size, setSize] = useState(0)
+
+    useEffect(() => {
+        if (selectSize) {
+            setDisplay('block')
+            setSize(selectSize > 5 ? 5 : selectSize)
+        } else {
+            setDisplay('none')
+        }
+    }, [selectSize])
+
+    function handleChange(event) {
+        setValue(event.target.value)
+        pesquisa(event.target.value)
+    }
+
+    function handleSelect(event) {
+        setValue(event.target.text)
+        setDisplay('none')
+    }
+
+    return (
+        <Label cols={cols} name={name} label={label}>
+            <div className="input-group">
+                <span className="input-group-addon">
+                    <i className={`fa fa-${icon}`}></i>
+                </span>
+                <input
+                    className='form-control'
+                    placeholder={placeholder}
+                    disabled={readOnly}
+                    onChange={handleChange}
+                    value={value}
+                    type='search' />
+                <select {...input} multiple={false}
+                    size={size}
+                    style={{ display: `${display}` }}
+                    className='form-control select'
+                    onClick={handleSelect}
+                    disabled={readOnly}>
+                    {children}
+                </select>
+            </div>
+        </Label>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react'
+// import Label from './Label'
+
+// import './LabelAndSelectBuscaIcon.css'
+
+// export default ({ getValue, cols, name, label, input, placeholder, readOnly, icon, children, pesquisa, selectCount }) => {
+
+//     const [value, setValue] = useState('')
+//     const [display, setDisplay] = useState('none')
+//     const [size, setSize] = useState(0)
+
+//     useEffect(() => {
+//         if (selectCount) {
+//             setDisplay('block')
+//             setSize(selectCount > 5 ? 5 : selectCount)
+//         } else {
+//             setDisplay('none')
+//         }
+//     }, [selectCount])
+
+//     useEffect(() => {
+//         getValue({ ...input }.value, setValue)
+//     },[])
+
+//     function handleChange(event) {
+//         setValue(event.target.value)
+//         pesquisa(event.target.value)
+//     }
+
+//     function handleSelect(event) {
+//         setValue(event.target.text)
+//         setDisplay('none')
+//     }
+
+//     return (
+//         <Label cols={cols} name={name} label={label}>
+//             <div className="input-group">
+//                 <span className="input-group-addon">
+//                     <i className={`fa fa-${icon}`}></i>
+//                 </span>
+//                 <input
+//                     className='form-control'
+//                     placeholder={placeholder}
+//                     disabled={readOnly}
+//                     onChange={handleChange}
+//                     value={value}
+//                     type='search' />
+//                 <select {...input} multiple={false}
+//                     size={size}
+//                     style={{ display: `${display}` }}
+//                     className='form-control select'
+//                     onClick={handleSelect}
+//                     disabled={readOnly}>
+//                     {children}
+//                 </select>
+//             </div>
+//         </Label>
+//     )
+// }

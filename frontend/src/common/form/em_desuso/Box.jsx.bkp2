@@ -1,0 +1,19 @@
+import React from 'react'
+
+export default ({ title, children }) => (
+  <div className='box box-default'>
+    <div className="box-header with-border">
+      <h3 className="box-title">{title}</h3>
+
+      <div className="box-tools pull-right">
+        <button type="button" className="btn btn-box-tool" data-widget="collapse">
+          <i className='fa fa-minus'></i>
+        </button>
+      </div>
+
+    </div>
+    <div className="box-body">
+      {children}
+    </div>
+  </div>
+)

@@ -1,0 +1,49 @@
+{
+  "name": "backend-matricula",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/config/server.js",
+  "scripts": {
+    "dev": "nodemon src/config/server.ts",
+    "build": "sucrase ./src -d ./dist --transforms typescript,imports"
+  },
+  "keywords": [],
+  "author": "Fábio Oliveira",
+  "license": "ISC",
+  "dependencies": {
+    "@types/restify": "^7.2.11",
+    "aws-sdk": "^2.568.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express-query-int": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.14",
+    "mongoose": "^5.5.4",
+    "mongoose-paginate": "^5.0.3",
+    "node-restful": "^0.2.6",
+    "restify": "^8.3.3",
+    "restify-cors-middleware": "^1.1.1",
+    "restify-errors": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.136",
+    "@types/mongoose": "^5.5.5",
+    "@types/restify-cors-middleware": "^1.0.1",
+    "@types/restify-errors": "^4.3.3",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "sucrase": "^3.10.1",
+    "typescript": "^3.5.1"
+  }
+}
