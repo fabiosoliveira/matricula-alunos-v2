@@ -20,4 +20,7 @@ export const ButtonWarning = ({onClick, size='sm', disabled, isEditing}) =>
 export const ButtonDanger = ({onClick, size='sm', disabled}) => 
     <Button disabled={disabled} option='danger' size={size} icon='trash-o' onClick={onClick} />
 
+export const ButtonInfo = ({onClick, size='sm', icon, disabled}) => 
+    <Button disabled={disabled} option='info' size={size} icon={icon} onClick={onClick} />
+
 export default Button
