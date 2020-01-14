@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getList, showUpdate, showDelete } from './alunoActions'
+import { getList, showUpdate, showDelete, showFoto } from './alunoActions'
 import { ButtonWarning, ButtonDanger, ButtonInfo } from "../../common/form/Button";
 import DataTable from '../../common/form/Tables/DataTable'
 
-const AlunoList = ({getList, data, showUpdate, showDelete}) => {
+const AlunoList = ({getList, data, showUpdate, showDelete, showFoto}) => {
 
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(1)
@@ -40,7 +40,7 @@ const AlunoList = ({getList, data, showUpdate, showDelete}) => {
             actions: <>
                 <ButtonWarning onClick={() => showUpdate(aluno)} />
                 <ButtonDanger onClick={() => showDelete(aluno)} />
-                <ButtonInfo icon='camera' onClick={() => showDelete(aluno)} />
+                <ButtonInfo icon='camera' onClick={() => showFoto(aluno)} />
             </>
         }
     })
@@ -60,66 +60,6 @@ const AlunoList = ({getList, data, showUpdate, showDelete}) => {
 
 const mapStateToProps = state => ({ data: state.aluno.data })
 const mapDispatchToProps = dispatch => bindActionCreators({
-    getList, showUpdate, showDelete
+    getList, showUpdate, showDelete, showFoto
 }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(AlunoList)
-
-
-
-// import React, { useEffect } from 'react'
-// import { bindActionCreators } from 'redux'
-// import { connect } from 'react-redux'
-// import { getList, showUpdate, showDelete } from './alunoActions'
-// import { ButtonWarning, ButtonDanger } from "../../common/form/Button";
-
-// const AlunoList = (props) => {
-
-//     useEffect(()=>{
-//         props.getList()
-//     }, [props])
-
-//     const renderRows = () => {
-//         const list = props.list || []
-//         return list.map(aluno => (
-//             <tr key={aluno._id}>
-//                 <td>{aluno.nome}</td>
-//                 <td>
-//                     { (aluno.dataNascimento || '')
-//                         .substr(0, 10)
-//                         .split('-')
-//                         .reverse()
-//                         .join('-') }
-//                 </td>
-//                 <td>{aluno.genero}</td>
-//                 <td>
-//                     <ButtonWarning onClick={() => props.showUpdate(aluno)} />
-//                     <ButtonDanger onClick={() => props.showDelete(aluno)} />
-//                 </td>
-//             </tr>
-//         ))
-//     }
-
-//     return (
-//         <div>
-//             <table className="table table-condensed">
-//                 <thead>
-//                     <tr>
-//                         <th>Nome</th>
-//                         <th>Data Nascimento</th>
-//                         <th>Gênero</th>
-//                         <th className='table-actions'>Ações</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     {renderRows()}
-//                 </tbody>
-//             </table>
-//         </div>
-//     )
-// }
-
-// const mapStateToProps = state => ({ list: state.aluno.list })
-// const mapDispatchToProps = dispatch => bindActionCreators({
-//     getList, showUpdate, showDelete
-// }, dispatch)
-// export default connect(mapStateToProps, mapDispatchToProps)(AlunoList)

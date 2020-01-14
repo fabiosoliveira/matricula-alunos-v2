@@ -1,19 +1,19 @@
-import { model, Document, Schema } from "mongoose";
-import CPFValidator from "../common/validators/CPFValidator";
-import CNSValidator from "../common/validators/CNSValidator";
-import CreateEnum from "../common/util";
+"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }Object.defineProperty(exports, "__esModule", {value: true});var _mongoose = require('mongoose');
+var _CPFValidator = require('../common/validators/CPFValidator'); var _CPFValidator2 = _interopRequireDefault(_CPFValidator);
+var _CNSValidator = require('../common/validators/CNSValidator'); var _CNSValidator2 = _interopRequireDefault(_CNSValidator);
+var _util = require('../common/util'); var _util2 = _interopRequireDefault(_util);
 
-interface QuizInterface {
-  onibusEscolar?: string;
-  necessidadeEspecial?: string;
-  tratamentoEspecial?: string;
-  algumaAlergia?: string;
-  algumMedicamentoContinuado?: string;
-  procedimentoEscolar?: string;
-}
+
+
+
+
+
+
+
+
 
 const quizSchema = {
-  onibusEscolar: CreateEnum(["SIM", "NAO"], false),
+  onibusEscolar: _util2.default.call(void 0, ["SIM", "NAO"], false),
   necessidadeEspecial: {
     type: String,
     required: false
@@ -30,19 +30,19 @@ const quizSchema = {
     type: String,
     required: false
   },
-  procedimentoEscolar: CreateEnum(
+  procedimentoEscolar: _util2.default.call(void 0, 
     ["CHAMAR-RESPONSAVEL", "LEVAR-AO-HOSPITAL"],
     false
   )
 };
 
-interface RgInterface {
-  numeroRegistro?: string;
-  dataEspedicao?: Date;
-  emissor?: string;
-  nomePai?: string;
-  nomeMae?: string;
-}
+
+
+
+
+
+
+
 
 const rgSchema = {
   numeroRegistro: {
@@ -72,14 +72,14 @@ const rgSchema = {
   }
 };
 
-interface EnderecoInterface {
-  id?: string;
-  endereco?: string;
-}
+
+
+
+
 
 const enderecoSchema = {
   id: {
-    type: Schema.Types.ObjectId,
+    type: _mongoose.Schema.Types.ObjectId,
     ref: "Endereco",
     required: false
   },
@@ -90,12 +90,12 @@ const enderecoSchema = {
   }
 };
 
-interface ResponsavelInterface {
-  nome?: string;
-  parentesco?: string;
-  rg?: RgInterface;
-  cpf?: string;
-}
+
+
+
+
+
+
 
 const responsavelSchema = {
   nome: {
@@ -118,24 +118,24 @@ const responsavelSchema = {
     type: String,
     required: false,
     validate: {
-      validator: CPFValidator,
+      validator: _CPFValidator2.default,
       message: "{PATH}: CPF Inválido ({VALUE})"
     }
   }
 };
 
-interface FotoInterface {
-  _id?: string;
-  name?: string;
-  size: number;
-  key: string;
-  url: string;
-  createdAt: string;
-}
+
+
+
+
+
+
+
+
 
 const fotoSchema = {
   _id: {
-    type: Schema.Types.ObjectId,
+    type: _mongoose.Schema.Types.ObjectId,
     ref: "Foto",
     required: false
   },
@@ -146,22 +146,22 @@ const fotoSchema = {
   createdAt: String
 };
 
-export interface AlunoInterface extends Document {
-  nome: string;
-  dataNascimento: Date;
-  cor?: string;
-  genero: string;
-  telefone?: string;
-  numeroSus: string;
-  cpf: string;
-  endereco?: EnderecoInterface;
-  status: string;
-  rg?: RgInterface;
-  responsavel?: ResponsavelInterface;
-  quiz?: QuizInterface;
-}
 
-const alunoSchema = new Schema(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const alunoSchema = new (0, _mongoose.Schema)(
   {
     nome: {
       type: String,
@@ -174,13 +174,13 @@ const alunoSchema = new Schema(
       default: Date.now(),
       required: [true, "Campo `{PATH}` é obrigatório"]
     },
-    cor: CreateEnum(["BRANCO", "PARDO", "NEGRO"], false),
+    cor: _util2.default.call(void 0, ["BRANCO", "PARDO", "NEGRO"], false),
     genero: {
       type: String,
       required: [true, "Campo `{PATH}` é obrigatório"],
       enum: ["MASCULINO", "FEMININO"],
       validate: {
-        validator: (v: string): boolean => /MASCULINO|FEMININO/i.test(v),
+        validator: (v) => /MASCULINO|FEMININO/i.test(v),
         msg: "valor `{VALUE}` do campo `{PATH}` é inválido"
       }
     },
@@ -191,7 +191,7 @@ const alunoSchema = new Schema(
                                 Outro formato aceito: (99) 9999-9999
                             */
       validate: {
-        validator: (v: string): boolean =>
+        validator: (v) =>
           /^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/.test(v),
         msg: "`{VALUE}` não é um número válido"
       },
@@ -202,7 +202,7 @@ const alunoSchema = new Schema(
       required: [true, "Campo `{PATH}` é obrigatório"],
       unique: true,
       validate: {
-        validator: CNSValidator,
+        validator: _CNSValidator2.default,
         msg: "{PATH}: SUS Inválido ({VALUE})"
       }
     },
@@ -211,13 +211,13 @@ const alunoSchema = new Schema(
       required: [true, "Campo `{PATH}` é obrigatório"],
       unique: true,
       validate: {
-        validator: CPFValidator,
+        validator: _CPFValidator2.default,
         msg: "{PATH}: CPF Inválido ({VALUE})"
       }
     },
     foto: fotoSchema,
     endereco: enderecoSchema,
-    status: CreateEnum(
+    status: _util2.default.call(void 0, 
       ["ATIVO", "INATIVO", "MATRICULADO"],
       [true, "Campo `{PATH}` é obrigatório"]
     ),
@@ -230,4 +230,4 @@ const alunoSchema = new Schema(
   }
 );
 
-export default model<AlunoInterface>("Aluno", alunoSchema);
+exports. default = _mongoose.model("Aluno", alunoSchema);

@@ -1,23 +1,23 @@
-import mongoose, { DocumentQuery } from 'mongoose'
-import restify, { Request, Response, Next } from 'restify'
-import { NotFoundError } from 'restify-errors'
+"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }Object.defineProperty(exports, "__esModule", {value: true});
 
-abstract class ModelController<T extends mongoose.Document> {
-  abstract applyRoutes(routes: restify.Server): void
+var _restifyerrors = require('restify-errors');
 
-  protected _model: mongoose.Model<T>
-  private _basePath: string
+ class ModelController {
+  
 
-  protected constructor(model: mongoose.Model<T>) {
+  
+  
+
+   constructor (model) {;ModelController.prototype.__init.call(this);ModelController.prototype.__init2.call(this);ModelController.prototype.__init3.call(this);ModelController.prototype.__init4.call(this);ModelController.prototype.__init5.call(this);ModelController.prototype.__init6.call(this);
     this._model = model
     this._basePath = `/api/${this._model.collection.name}`
   }
 
-  protected get basePath(): string {
+   get basePath () {
     return this._basePath
   }
 
-  private filter(req: Request): any {
+   filter (req) {
     let conditions = {}
 
     for (const key in req.query) {
@@ -41,7 +41,7 @@ abstract class ModelController<T extends mongoose.Document> {
     return conditions
   }
 
-  private envelopData(data: T[], count: number): any {
+   envelopData (data, count) {
     return {
       meta: {
         count
@@ -51,7 +51,7 @@ abstract class ModelController<T extends mongoose.Document> {
   }
 
   // get
-  protected findAll = (req: Request, res: Response, next: Next): void => {
+   __init() {this.findAll = (req, res, next) => {
     const { select, sort } = req.query
 
     const limit = parseInt(req.query.limit)
@@ -65,76 +65,76 @@ abstract class ModelController<T extends mongoose.Document> {
     const options = { limit, skip, sort }
 
     this._model.find(conditions, select, options)
-      .then(async (data): Promise<void> => {
+      .then(async (data) => {
         const result = await this._model.countDocuments(conditions)
         return this.envelopData(data, result)
       })
-      .then((data): void => {
+      .then((data) => {
         res.send(data)
       })
       .catch(next)
-  }
+  }}
 
   // get
-  protected findById = (req: Request, res: Response, next: Next): void => {
+   __init2() {this.findById = (req, res, next) => {
     this._model.findById(req.params.id)
-      .then((document): void => {
+      .then((document) => {
         if (document) {
           res.send(document)
         } else {
-          throw new NotFoundError('Document not found')
+          throw new (0, _restifyerrors.NotFoundError)('Document not found')
         }
       })
       .catch(next)
-  }
+  }}
 
   // post
-  protected save = (req: Request, res: Response, next: Next): void => {
+   __init3() {this.save = (req, res, next) => {
     this._model.create(req.body)
-      .then((result): void => {
+      .then((result) => {
         res.send({ ...result })
       })
       .catch(next)
-  }
+  }}
 
   // put
-  protected replace = (req: Request, res: Response, next: Next): void => {
+   __init4() {this.replace = (req, res, next) => {
     this._model.replaceOne({ _id: req.params.id }, req.body)
-      .then((result): DocumentQuery<T, T, {}> => {
+      .then((result) => {
         if (result.n) {
           return this._model.findById(req.params.id)
         } else {
-          throw new NotFoundError('Document not found')
+          throw new (0, _restifyerrors.NotFoundError)('Document not found')
         }
       })
-      .then((result): void => {
+      .then((result) => {
         res.send({ ...result })
       })
       .catch(next)
-  }
+  }}
 
   // patch
-  protected update = (req: Request, res: Response, next: Next): void => {
+   __init5() {this.update = (req, res, next) => {
     const options = { runValidators: true, new: true }
     this._model.findByIdAndUpdate(req.params.id, req.body, options)
-      .then((result): void => {
+      .then((result) => {
         res.send({ ...result })
       })
       .catch(next)
-  }
+  }}
 
   // del
-  protected delete = (req: Request, res: Response, next: Next): void => {
+   __init6() {this.delete = (req, res, next) => {
     this._model.deleteOne({ _id: req.params.id })
-      .then((cmdResult): void => {
+      .then((cmdResult) => {
         if (cmdResult.n) {
           res.send(204)
         } else {
-          throw new NotFoundError('Document not found')
+          throw new (0, _restifyerrors.NotFoundError)('Document not found')
         }
       })
       .catch(next)
-  }
+  }}
 }
 
-export default ModelController
+exports. default = ModelController

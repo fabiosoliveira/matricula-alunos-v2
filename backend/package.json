@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/config/server.js",
   "scripts": {
+    "start": "node dist/config/server.js",
     "dev": "nodemon src/config/server.ts",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports"
   },

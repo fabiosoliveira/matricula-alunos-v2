@@ -12,7 +12,7 @@ dotenv.config()
 export class App {
   public server: restify.Server
 
-  public constructor () {
+  public constructor() {
     this.server = restify.createServer()
 
     this.middlewares()
@@ -21,11 +21,11 @@ export class App {
     this.server.on('restifyError', handleError)
   }
 
-  public startSession (): Promise<ClientSession> {
+  public startSession(): Promise<ClientSession> {
     return mongoose.startSession()
   }
 
-  private middlewares (): void {
+  private middlewares(): void {
     const cors = this.corsConfiguration()
     this.server.pre(cors.preflight)
     this.server.use(cors.actual)
@@ -46,7 +46,7 @@ export class App {
     }))
   }
 
-  private corsConfiguration (): CorsMiddleware {
+  private corsConfiguration(): CorsMiddleware {
     return corsMiddleware({
       // preflightMaxAge: 5, // Optional
       origins: ['*'],
@@ -55,22 +55,23 @@ export class App {
     })
   }
 
-  private database (): void {
+  private database(): void {
     // const url = 'mongodb://localhost:27017/matricula'
     // const url = 'mongodb://localhost:27017,localhost:27018,localhost:27019/matricula'
     mongoose.connect(process.env.MONGO_URL, {
       useCreateIndex: true,
+      useFindAndModify: false,
       useNewUrlParser: true
       // replicaSet: 'rs',
       // useFindAndModify: false
     })
   }
 
-  private routes (): void {
+  private routes(): void {
     routes(this.server)
   }
 
-  public async shutdown (): Promise<void> {
+  public async shutdown(): Promise<void> {
     return mongoose.disconnect().then((): void => this.server.close())
   }
 }
