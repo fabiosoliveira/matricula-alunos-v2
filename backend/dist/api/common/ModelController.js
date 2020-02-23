@@ -8,16 +8,16 @@ var _restifyerrors = require('restify-errors');
   
   
 
-   constructor (model) {;ModelController.prototype.__init.call(this);ModelController.prototype.__init2.call(this);ModelController.prototype.__init3.call(this);ModelController.prototype.__init4.call(this);ModelController.prototype.__init5.call(this);ModelController.prototype.__init6.call(this);
+   constructor(model) {;ModelController.prototype.__init.call(this);ModelController.prototype.__init2.call(this);ModelController.prototype.__init3.call(this);ModelController.prototype.__init4.call(this);ModelController.prototype.__init5.call(this);ModelController.prototype.__init6.call(this);
     this._model = model
     this._basePath = `/api/${this._model.collection.name}`
   }
 
-   get basePath () {
+   get basePath() {
     return this._basePath
   }
 
-   filter (req) {
+   filter(req) {
     let conditions = {}
 
     for (const key in req.query) {
@@ -41,7 +41,7 @@ var _restifyerrors = require('restify-errors');
     return conditions
   }
 
-   envelopData (data, count) {
+   envelopData(data, count) {
     return {
       meta: {
         count

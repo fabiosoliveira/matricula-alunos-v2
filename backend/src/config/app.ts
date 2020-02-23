@@ -60,10 +60,9 @@ export class App {
     // const url = 'mongodb://localhost:27017,localhost:27018,localhost:27019/matricula'
     mongoose.connect(process.env.MONGO_URL, {
       useCreateIndex: true,
-      useFindAndModify: false,
-      useNewUrlParser: true
+      useNewUrlParser: true,
       // replicaSet: 'rs',
-      // useFindAndModify: false
+      useFindAndModify: false
     })
   }
 
