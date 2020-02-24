@@ -6,6 +6,7 @@ export const TAB_DELETE = "tabDelete";
 export const TAB_LIST = "tabList";
 export const TAB_CREATE = "tabCreate";
 export const TAB_FOTO = "tabFoto";
+export const TAB_PRINT = "tabPrint";
 export const TAB_SELECTED = "TAB_SELECTED";
 export const TAB_SHOWED = "TAB_SHOWED";
 

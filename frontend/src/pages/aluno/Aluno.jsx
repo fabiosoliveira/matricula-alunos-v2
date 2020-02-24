@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
@@ -9,29 +9,29 @@ import { TAB_LIST, TAB_CREATE } from "../consts";
 import List from "./AlunoList";
 import Form from "./AlunoForm";
 import Foto from "./AlunoFoto";
+import Print from "./AlunoPrint";
 import RenderPage from "../RenderPage";
 
-class Aluno extends Component {
-  componentWillMount() {
-    this.props.selectTab(TAB_LIST);
-    this.props.showTabs(TAB_LIST, TAB_CREATE);
-  }
+const Aluno = ({ selectTab, showTabs, create, update, remove }) => {
+  useEffect(() => {
+    selectTab(TAB_LIST);
+    showTabs(TAB_LIST, TAB_CREATE);
+  }, [selectTab, showTabs]);
 
-  render() {
-    const params = {
-      title: "Aluno",
-      small: "Cadastro",
-      List,
-      Form,
-      Foto,
-      create: this.props.create,
-      update: this.props.update,
-      remove: this.props.remove
-    };
-
-    return <RenderPage {...params} />;
-  }
-}
+  return (
+    <RenderPage
+      title="Aluno"
+      small="Cadastro"
+      List={List}
+      Form={Form}
+      Foto={Foto}
+      Print={Print}
+      create={create}
+      update={update}
+      remove={remove}
+    />
+  );
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

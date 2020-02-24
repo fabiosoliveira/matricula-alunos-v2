@@ -7,6 +7,7 @@ import {
   ALUNOS_FETCHED,
   ALUNO_FORM,
   TAB_FOTO,
+  TAB_PRINT,
   ALUNO_SELECTED
 } from "../consts";
 
@@ -45,12 +46,16 @@ export function showFoto(aluno) {
   return [showTabs(TAB_FOTO), selectTab(TAB_FOTO), selectAluno(aluno)];
 }
 
+export function showPrint(aluno) {
+  return [showTabs(TAB_PRINT), selectTab(TAB_PRINT), selectAluno(aluno)];
+}
+
 function selectAluno(aluno) {
   return {
     type: ALUNO_SELECTED,
     payload: {
       id: aluno._id,
-      nome: aluno.nome
+      ...aluno
     }
   };
 }

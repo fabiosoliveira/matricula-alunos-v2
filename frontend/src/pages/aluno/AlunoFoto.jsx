@@ -84,12 +84,14 @@ const AlunoFoto = ({ init, alunoSelected }) => {
 
   return (
     <form action="" onSubmit={onSubmitCustom}>
-      <div class="form-group">
+      <div className="form-group">
         {!foto && !urlFoto && (
           <>
-            <label for="upload">{alunoSelected.nome}</label>
+            <label htmlFor="upload">{alunoSelected.nome}</label>
             <input type="file" id="upload" onChange={onChangeCustom} />
-            <p class="help-block">Escolha uma foto de perfil para o aluno.</p>
+            <p className="help-block">
+              Escolha uma foto de perfil para o aluno.
+            </p>
           </>
         )}
         {urlFoto && foto && (
