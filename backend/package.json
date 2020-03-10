@@ -12,9 +12,11 @@
   "author": "Fábio Oliveira",
   "license": "ISC",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/restify": "^7.2.11",
     "aws-sdk": "^2.568.0",
     "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express-query-int": "^3.0.0",
@@ -29,6 +31,7 @@
     "sharp": "^0.24.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.3.8",
     "@types/lodash": "^4.14.136",
     "@types/mongoose": "^5.5.5",
     "@types/restify-cors-middleware": "^1.0.1",

@@ -7,7 +7,7 @@ import Endereco from '../Endereco/Endereco'
 import { NotFoundError } from 'restify-errors'
 
 class AlunoController extends ModelController<AlunoInterface> {
-  public constructor () {
+  public constructor() {
     super(Aluno)
   }
 
@@ -24,7 +24,7 @@ class AlunoController extends ModelController<AlunoInterface> {
       .then((result): void => {
         res.send({ ...result })
       })
-      .catch((err):void => {
+      .catch((err): void => {
         console.log(err)
         next(err)
       })
@@ -50,7 +50,7 @@ class AlunoController extends ModelController<AlunoInterface> {
       .then((result): void => {
         res.send({ ...result })
       })
-      .catch((err):void => {
+      .catch((err): void => {
         console.log(err)
         next(err)
       })
@@ -73,14 +73,14 @@ class AlunoController extends ModelController<AlunoInterface> {
       .then((): void => {
         res.send(204)
       })
-      .catch((err):void => {
+      .catch((err): void => {
         console.log(err)
         next(err)
       })
   }
 
-  public applyRoutes (application: restify.Server): void {
-    application.get(this.basePath, this.findAll)
+  public applyRoutes(application: restify.Server): void {
+    application.get(this.basePath, [this.auth, this.findAll])
     application.get(`${this.basePath}/:id`, this.findById)
     application.post(this.basePath, this.saveAluno)
     application.put(`${this.basePath}/:id`, this.replaceAluno)

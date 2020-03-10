@@ -1,6 +1,7 @@
 import mongoose, { DocumentQuery } from 'mongoose'
 import restify, { Request, Response, Next } from 'restify'
-import { NotFoundError } from 'restify-errors'
+import { NotFoundError, NotAuthorizedError } from 'restify-errors'
+import jwt from 'jsonwebtoken'
 
 abstract class ModelController<T extends mongoose.Document> {
   abstract applyRoutes(routes: restify.Server): void
@@ -134,6 +135,35 @@ abstract class ModelController<T extends mongoose.Document> {
         }
       })
       .catch(next)
+  }
+
+  protected auth = (req: Request, res: Response, next: Next): void => {
+    const authHeader = req.headers.authorization
+
+    if (!authHeader) {
+      return next(new NotAuthorizedError('No token provided'))
+    }
+
+    const parts = authHeader.split(' ')
+
+    if (!parts.length === 2) {
+      return next(new NotAuthorizedError('Token error'))
+    }
+
+    const [scheme, token] = parts
+
+    if (!/^Bearer$/i.test(scheme)) {
+      return next(new NotAuthorizedError('Token malformatted'))
+    }
+
+    jwt.verify(token, process.env.AUTH_SECRET, (err, decoded) => {
+      if (err) {
+        return next(new NotAuthorizedError('Token invalid'))
+      }
+
+      req.userId = decoded.id
+      return next()
+    })
   }
 }
 
