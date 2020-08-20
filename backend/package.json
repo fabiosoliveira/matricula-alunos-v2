@@ -15,7 +15,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/restify": "^7.2.11",
     "aws-sdk": "^2.568.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
