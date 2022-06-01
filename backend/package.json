@@ -28,7 +28,7 @@
     "restify": "^8.3.3",
     "restify-cors-middleware": "^1.1.1",
     "restify-errors": "^8.0.0",
-    "sharp": "^0.24.0"
+    "sharp": "^0.30.5"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.3.8",
